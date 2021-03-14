@@ -22,10 +22,23 @@ steps:
     artifactName: my-app-1.0-SNAPSHOT
 
 - task: Docker@2
+  displayName: Login to Docker Hub
+  inputs:
+    command: login
+    containerRegistry: dockerRegistryServiceConnection2
+
+- task: Docker@2
   displayName: Build and Push
   inputs:
-    Dockerfile: 'Dockerfile'
+    containerRegistry: 'Docker Hub'
+    Dockerfile: Dockerfile
     command: buildAndPush
     repository: tonyschneider/devops-exercise-image
     tags: 1.0-SNAPSHOT
 
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker Hub'
+    command: 'start'
+    repository: tonyschneider/devops-exercise-image
+    tags: 1.0-SNAPSHOT
