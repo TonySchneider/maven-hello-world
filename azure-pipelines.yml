@@ -14,11 +14,11 @@ steps:
   displayName: cleaning
   workingDirectory: my-app
 
-- script: mvn compile
+- script: mvn compile -X
   displayName: compiling
   workingDirectory: my-app
 
-- script: mvn package
+- script: mvn package -X
   displayName: packaging
   workingDirectory: my-app
 
