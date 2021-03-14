@@ -11,9 +11,11 @@ pool:
 
 steps:
 - script: mvn compile
+  workingDirectory: my-app
   displayName: 'compiling'
 
 - script: mvn package
+  workingDirectory: my-app
   displayName: 'packaging'
 
 - task: PublishBuildArtifacts@1
