@@ -10,49 +10,41 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Maven@3
+- script: mvn clean
+  displayName: cleaning
+  workingDirectory: my-app
+
+- script: mvn compile
+  displayName: compiling
+  workingDirectory: my-app
+
+- script: mvn package
+  displayName: packaging
+  workingDirectory: my-app
+
+- task: PublishBuildArtifacts@1
   inputs:
-    mavenPomFile: 'my-app/pom.xml'
-    goals: 'compile'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
-
-# - script: mvn compile
-#   displayName: compiling
-#   workingDirectory: my-app
-
-# - script: mvn package
-#   displayName: packaging
-#   workingDirectory: my-app
-
-# - task: PublishBuildArtifacts@1
-#   inputs:
-#     pathToPublish: 'target/my-app-1.0-SNAPSHOT.jar'
-#     artifactName: my-app-1.0-SNAPSHOT
-
-# # - task: Docker@2
-# #   displayName: Login to Docker Hub
-# #   inputs:
-# #     command: login
-# #     containerRegistry: dockerRegistryServiceConnection2
+    pathToPublish: 'my-app/target/my-app-1.0-SNAPSHOT.jar'
+    artifactName: my-app-1.0-SNAPSHOT
 
 # - task: Docker@2
-#   displayName: Build and Push
+#   displayName: Login to Docker Hub
 #   inputs:
-#     containerRegistry: 'Docker Hub'
-#     Dockerfile: Dockerfile
-#     command: buildAndPush
-#     repository: tonyschneider/devops-exercise-image
-#     tags: 1.0-SNAPSHOT
+#     command: login
+#     containerRegistry: dockerRegistryServiceConnection2
 
-# - task: Docker@2
-#   inputs:
-#     containerRegistry: 'Docker Hub'
-#     command: 'start'
-#     repository: tonyschneider/devops-exercise-image
-#     tags: 1.0-SNAPSHOT
+- task: Docker@2
+  displayName: Build and Push
+  inputs:
+    containerRegistry: 'Docker Hub'
+    Dockerfile: Dockerfile
+    command: buildAndPush
+    repository: tonyschneider/devops-exercise-image
+    tags: 1.0-SNAPSHOT
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker Hub'
+    command: 'start'
+    repository: tonyschneider/devops-exercise-image
+    tags: 1.0-SNAPSHOT
