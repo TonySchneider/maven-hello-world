@@ -53,5 +53,5 @@ steps:
 
 - task: Docker@2
   inputs:
-    command: 'start'
-    container: 'devops-exercise-container'
+    command: start
+    container: devops-exercise-container
