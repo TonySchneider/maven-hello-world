@@ -10,7 +10,7 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: mvn clean
+- script: mvn clean install
   displayName: cleaning
   workingDirectory: my-app
 
