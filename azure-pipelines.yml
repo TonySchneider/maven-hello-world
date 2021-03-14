@@ -9,6 +9,11 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+resources:
+  containers:
+  - container: devops-exercise-container
+    image: tonyschneider/devops-exercise-image:1.0-SNAPSHOT
+
 steps:
 - script: mvn compile -X
   displayName: compiling
@@ -38,10 +43,15 @@ steps:
     repository: tonyschneider/devops-exercise-image
     tags: 1.0-SNAPSHOT
 
+# - task: Docker@2
+#   inputs:
+#     containerRegistry: 'Docker Hub'
+#     command: 'start'
+#     repository: tonyschneider/devops-exercise-image
+#     tags: 1.0-SNAPSHOT
+#     container: builder
+
 - task: Docker@2
   inputs:
-    containerRegistry: 'Docker Hub'
     command: 'start'
-    repository: tonyschneider/devops-exercise-image
-    tags: 1.0-SNAPSHOT
-    container: builder
+    container: 'devops-exercise-container'
