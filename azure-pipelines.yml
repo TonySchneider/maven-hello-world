@@ -10,9 +10,8 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: mvn clean install
-  displayName: cleaning
-  workingDirectory: my-app
+- script: mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+  displayName: creating files
 
 - script: mvn compile -X
   displayName: compiling
