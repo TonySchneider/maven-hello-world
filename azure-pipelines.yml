@@ -44,3 +44,4 @@ steps:
     command: 'start'
     repository: tonyschneider/devops-exercise-image
     tags: 1.0-SNAPSHOT
+    container: builder
