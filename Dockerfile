@@ -1,4 +1,4 @@
-FROM openjdk:12-alpine
+FROM openjdk:latest
 WORKDIR /usr/src/myapp
 COPY my-app/target /usr/src/myapp/target/
 
